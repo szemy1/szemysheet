@@ -1,0 +1,2 @@
+# szemysheet
+Tanuló project
