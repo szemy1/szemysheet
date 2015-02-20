@@ -136,7 +136,7 @@ class GetDatabase():
 
 
 if __name__ == "__main__":
-    db = GetDatabase("Grid_SQLite_demo_db")
+    db = GetDatabase("Grid_SQLite_demo_db.db")
     app = wx.App()
     frame = MainFrame(None, db)
     frame.Show(True)
