@@ -23,7 +23,7 @@ class MainPanel(wx.Panel):
         if len(var) == 9 or len(var) == 11:
             print "???"
         #MainPanel->SplitterWindow->MainFrame ( 2x GetParent() )
-        self.GetParent().GetParent().AddPanel()
+        #self.GetParent().GetParent().AddPanel()
 
 class SecondPanel(gridlib.Grid, wx.Panel):
     def __init__(self, parent, db):
@@ -109,10 +109,10 @@ class MainFrame(wx.Frame):
 
         self.SetSizer(self.sizer)
 
-    def AddPanel(self):
+    """def AddPanel(self):
         self.newPanel = SecondPanel(self, 1, 1)
         self.sizer.Add(self.newPanel, 1, wx.EXPAND)
-        self.sizer.Layout()
+        self.sizer.Layout()"""
 
     def exit(self, event):
         self.Close(True)
