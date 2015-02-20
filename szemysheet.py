@@ -114,10 +114,10 @@ class MainFrame(wx.Frame):
         self.sizer.Add(self.newPanel, 1, wx.EXPAND)
         self.sizer.Layout()
 
-    def exit(self, event):
+    def exit(self):
         self.Close(True)
 
-    def exitwindow(self, event):
+    def exitwindow(self):
         self.Destroy()
 
 
