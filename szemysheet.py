@@ -28,7 +28,7 @@ class MainPanel(wx.Panel):
 class SecondPanel(gridlib.Grid, wx.Panel):
     def __init__(self, parent, db):
         gridlib.Grid.__init__(self, parent)
-        self.CreateGrid(50, 10)
+        self.CreateGrid(10, 10)
 
         self.db = db
         self.cur = self.db.con.cursor()
@@ -66,9 +66,12 @@ class SecondPanel(gridlib.Grid, wx.Panel):
             self.db.con.commit()
 
         self.Bind(gridlib.EVT_GRID_CELL_CHANGE, self.CellContentsChanged)
+        self.Bind(wx.grid.EVT_GRID_CELL_LEFT_CLICK, self.SelectRowLeftClick)
 
     def SelectRowLeftClick(self, event):
-        pass
+        self.SetSelectionMode(wx.grid.Grid.SelectRows)
+        event.Skip()
+
 
     def CellContentsChanged(self, event):
         x = event.GetCol()
