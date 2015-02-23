@@ -17,7 +17,7 @@ class MainPanel(wx.Panel):
     def __init__(self, parent):
         """Constructor"""
         wx.Panel.__init__(self, parent=parent)
-        labeler = "kereső".decode(encoding='utf-8', errors='strict',)
+        labeler = "kereső".decode(encoding='utf-8', errors='strict', )
         buttonbox = "keresés".decode(encoding='utf-8', errors='strict')
         self.txtOne = wx.StaticText(self, -1, label=labeler, pos=(20, 10))
         self.txtPlace = wx.TextCtrl(self, pos=(20, 30))
@@ -34,13 +34,18 @@ class MainPanel(wx.Panel):
             print "???"
 
 
-
 class SecondPanel(gridlib.Grid, wx.Panel):
-    def __init__(self, parent, db):
+    """
+
+    :param parent:
+    :param db:
+    """
+
+    def __init__(self, parent, database):
         gridlib.Grid.__init__(self, parent)
         self.CreateGrid(10, 10)
 
-        self.db = db
+        self.db = database
         self.cur = self.db.con.cursor()
         if self.db.exists:
             # read labels in from DATA table
@@ -127,13 +132,13 @@ class MainFrame(wx.Frame):
         """Constructor
         :type self: object
         """
-        # noinspection PyCallByClass
+        # noinspection PyCallByClass,PyTypeChecker
         wx.Frame.__init__(self, None, title="test", size=(940, 600))
 
         self.parent = parent
-        exit = wx.Button(self, label="exit", pos=(800, 70))
-        exit.Bind(wx.EVT_BUTTON, self.exit)
-        exit.Bind(wx.EVT_CLOSE, self.exitwindow)
+        kilep = wx.Button(self, label="exit", pos=(800, 70))
+        kilep.Bind(wx.EVT_BUTTON, self.exit)
+        kilep.Bind(wx.EVT_CLOSE, self.exitwindow)
 
         self.splitter = wx.SplitterWindow(self)
 
@@ -154,13 +159,28 @@ class MainFrame(wx.Frame):
         self.sizer.Layout()"""
 
     def exit(self, event):
+        """
+
+
+        :param event:
+        """
         self.Close(True)
 
     def exitwindow(self, event):
+        """
+
+
+        :param event:
+        """
         self.Destroy()
 
 
 class GetDatabase(object):
+    """
+
+    :param f:
+    """
+
     def __init__(self, f):
         # check db file exists
 
