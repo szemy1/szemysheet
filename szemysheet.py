@@ -128,7 +128,7 @@ class MainFrame(wx.Frame):
         self.Destroy()
 
 
-class GetDatabase():
+class GetDatabase(object):
     def __init__(self, f):
         # check db file exists
 
