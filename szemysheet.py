@@ -1,17 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import wx
-import wx.grid as gridlib
 import sqlite3 as sqlite
 import os.path
 
+import wx
+import wx.grid as gridlib
+
+
 class MainPanel(wx.Panel):
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     def __init__(self, parent):
         """Constructor"""
         wx.Panel.__init__(self, parent=parent)
-        labeltext=("kereső").decode('utf-8')
-        buttonlabel=("keresés").decode('utf-8')
+        labeltext = ("kereső").decode('utf-8')
+        buttonlabel = ("keresés").decode('utf-8')
         self.txtOne = wx.StaticText(self, -1, label=labeltext, pos=(20, 10))
         self.txtPlace = wx.TextCtrl(self, pos=(20, 30))
         button = wx.Button(self, label=buttonlabel, pos=(20, 70))
@@ -21,8 +23,9 @@ class MainPanel(wx.Panel):
         var = self.txtPlace.GetValue()
         if len(var) == 9 or len(var) == 11:
             print "???"
-        #MainPanel->SplitterWindow->MainFrame ( 2x GetParent() )
-        #self.GetParent().GetParent().AddPanel()
+            #MainPanel->SplitterWindow->MainFrame ( 2x GetParent() )
+            #self.GetParent().GetParent().AddPanel()
+
 
 class SecondPanel(gridlib.Grid, wx.Panel):
     def __init__(self, parent, db):
@@ -33,7 +36,7 @@ class SecondPanel(gridlib.Grid, wx.Panel):
         self.cur = self.db.con.cursor()
         if self.db.exists:
             # read labels in from DATA table
-            meta = self.cur.execute("SELECT * from DATATABLE")
+            meta = self.cur.execute("SELECT * FROM DATATABLE")
             labels = []
             for i in meta.description:
                 labels.append(i[0])
@@ -41,7 +44,7 @@ class SecondPanel(gridlib.Grid, wx.Panel):
             for i in range(len(labels)):
                 self.SetColLabelValue(i, labels[i])
             # then populate grid with data from DATA
-            all = self.cur.execute("SELECT * from DATATABLE ORDER by DTindex")
+            all = self.cur.execute("SELECT * FROM DATATABLE ORDER BY DTindex")
             for row in all:
                 row_num = row[0]
                 cells = row[1:]
@@ -49,7 +52,7 @@ class SecondPanel(gridlib.Grid, wx.Panel):
                     if cells[i] != None and cells[i] != "null":
                         content = cells[i]
                         content.encode('UTF-8')
-                        #self.SetCellValue(row_num, i, cells[i].encode('UTF-8'))
+                        # self.SetCellValue(row_num, i, cells[i].encode('UTF-8'))
                         self.SetCellValue(row_num, i, content)
         else:
             labels = "CREATE TABLE DATATABLE\n(DTindex INTEGER PRIMARY KEY,\n"
@@ -66,7 +69,7 @@ class SecondPanel(gridlib.Grid, wx.Panel):
 
         self.Bind(gridlib.EVT_GRID_CELL_CHANGE, self.CellContentsChanged)
         self.Bind(wx.grid.EVT_GRID_CELL_LEFT_CLICK, self.SelectRowLeftClick)
-        #self.Bind(wx.grid.EVT_GRID_SELECT_CELL, self.SelectCellSelectRow)
+        # self.Bind(wx.grid.EVT_GRID_SELECT_CELL, self.SelectCellSelectRow)
         self.Bind(wx.EVT_NAVIGATION_KEY, self.SelectCellSelectRow)
 
     def SelectRowLeftClick(self, event):
@@ -81,7 +84,7 @@ class SecondPanel(gridlib.Grid, wx.Panel):
         x = event.GetCol()
         y = event.GetRow()
         val = self.GetCellValue(y, x)
-        #val.encode('UTF-8','strict')
+        # val.encode('UTF-8','strict')
         if val == "":
             val = "null"
         ColLabel = self.GetColLabelValue(x)
@@ -94,7 +97,7 @@ class SecondPanel(gridlib.Grid, wx.Panel):
 
 
 class MainFrame(wx.Frame):
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     def __init__(self, parent, db):
         """Constructor"""
         wx.Frame.__init__(self, None, title="test", size=(940, 600))
