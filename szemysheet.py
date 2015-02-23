@@ -81,12 +81,12 @@ class SecondPanel(gridlib.Grid, wx.Panel):
 
         self.Bind(gridlib.EVT_GRID_CELL_CHANGE, self.CellContentsChanged)
         self.Bind(wx.grid.EVT_GRID_CELL_LEFT_CLICK, self.SelectRowLeftClick)
-        # self.Bind(wx.grid.EVT_GRID_SELECT_CELL, self.SelectCellSelectRow)
+        """self.Bind(wx.grid.EVT_GRID_EDITOR_SHOWN, self.SelectCellSelectRow)"""
         self.Bind(wx.grid.wx.EVT_NAVIGATION_KEY, self.SelectCellSelectRow)
 
     def SelectRowLeftClick(self, event):
         """
-
+        :rtype : object
         :param event:
         """
         self.SetSelectionMode(wx.grid.Grid.SelectRows)
@@ -161,7 +161,7 @@ class MainFrame(wx.Frame):
     def exit(self, event):
         """
 
-
+        :type event: object
         :param event:
         """
         self.Close(True)
@@ -169,7 +169,7 @@ class MainFrame(wx.Frame):
     def exitwindow(self, event):
         """
 
-
+        :type event: object
         :param event:
         """
         self.Destroy()
