@@ -81,8 +81,8 @@ class SecondPanel(gridlib.Grid, wx.Panel):
 
         self.Bind(gridlib.EVT_GRID_CELL_CHANGE, self.CellContentsChanged)
         self.Bind(wx.grid.EVT_GRID_CELL_LEFT_CLICK, self.SelectRowLeftClick)
-        """self.Bind(wx.grid.EVT_GRID_EDITOR_SHOWN, self.SelectCellSelectRow)"""
-        self.Bind(wx.grid.wx.EVT_NAVIGATION_KEY, self.SelectCellSelectRow)
+        self.Bind(wx.EVT_KEY_DOWN, self.SelectCellSelectRow)
+        """self.Bind(wx.grid.wx.EVT_NAVIGATION_KEY, self.SelectCellSelectRow)"""
 
     def SelectRowLeftClick(self, event):
         """
