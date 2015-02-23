@@ -9,22 +9,30 @@ import wx.grid as gridlib
 
 class MainPanel(wx.Panel):
     # ----------------------------------------------------------------------
+    """
+
+    :param parent:
+    """
+
     def __init__(self, parent):
         """Constructor"""
         wx.Panel.__init__(self, parent=parent)
-        labeltext = ("kereső").decode('utf-8')
-        buttonlabel = ("keresés").decode('utf-8')
-        self.txtOne = wx.StaticText(self, -1, label=labeltext, pos=(20, 10))
+        labeler = "kereső".decode(encoding='utf-8', errors='strict',)
+        buttonbox = "keresés".decode(encoding='utf-8', errors='strict')
+        self.txtOne = wx.StaticText(self, -1, label=labeler, pos=(20, 10))
         self.txtPlace = wx.TextCtrl(self, pos=(20, 30))
-        button = wx.Button(self, label=buttonlabel, pos=(20, 70))
+        button = wx.Button(self, label=buttonbox, pos=(20, 70))
         button.Bind(wx.EVT_BUTTON, self.SearchButton)
 
-    def SearchButton(self, event):
+    def SearchButton(self):
+        """
+
+        :param
+        """
         var = self.txtPlace.GetValue()
         if len(var) == 9 or len(var) == 11:
             print "???"
-            #MainPanel->SplitterWindow->MainFrame ( 2x GetParent() )
-            #self.GetParent().GetParent().AddPanel()
+
 
 
 class SecondPanel(gridlib.Grid, wx.Panel):
@@ -44,12 +52,12 @@ class SecondPanel(gridlib.Grid, wx.Panel):
             for i in range(len(labels)):
                 self.SetColLabelValue(i, labels[i])
             # then populate grid with data from DATA
-            all = self.cur.execute("SELECT * FROM DATATABLE ORDER BY DTindex")
-            for row in all:
+            mind = self.cur.execute("SELECT * FROM DATATABLE ORDER BY DTindex")
+            for row in mind:
                 row_num = row[0]
                 cells = row[1:]
                 for i in range(len(cells)):
-                    if cells[i] != None and cells[i] != "null":
+                    if cells[i] is not None and cells[i] != "null":
                         content = cells[i]
                         content.encode('UTF-8')
                         # self.SetCellValue(row_num, i, cells[i].encode('UTF-8'))
@@ -63,7 +71,6 @@ class SecondPanel(gridlib.Grid, wx.Panel):
             labels += ");"
             self.cur.execute(labels)
             for i in range(self.GetNumberRows()):
-                RowLable = self.GetRowLabelValue(i)
                 self.cur.execute("INSERT into DATATABLE (DTindex) values (%d)" % i)
             self.db.con.commit()
 
@@ -73,23 +80,35 @@ class SecondPanel(gridlib.Grid, wx.Panel):
         self.Bind(wx.grid.wx.EVT_NAVIGATION_KEY, self.SelectCellSelectRow)
 
     def SelectRowLeftClick(self, event):
+        """
+
+        :param event:
+        """
         self.SetSelectionMode(wx.grid.Grid.SelectRows)
         event.Skip()
 
     def SelectCellSelectRow(self, event):
+        """
+
+        :param event:
+        """
         self.SetSelectionMode(wx.grid.Grid.SelectRows)
         event.Skip()
 
     def CellContentsChanged(self, event):
+        """
+
+        :param event:
+        """
         x = event.GetCol()
         y = event.GetRow()
         val = self.GetCellValue(y, x)
         # val.encode('UTF-8','strict')
         if val == "":
             val = "null"
-        ColLabel = self.GetColLabelValue(x)
-        InsertCell = "UPDATE DATATABLE SET %s = ? WHERE DTindex = %d" % (ColLabel, y)
-        self.cur.execute(InsertCell, [(val), ])  # protects against injection of dangerous 'val'
+        collabel = self.GetColLabelValue(x)
+        insertcell = "UPDATE DATATABLE SET %s = ? WHERE DTindex = %d" % (collabel, y)
+        self.cur.execute(insertcell, [val, ])  # protects against injection of dangerous 'val'
         # needs to be done for 'ColLabel' too. 'y' is fine as it's an integer
         self.db.con.commit()  # do commit here to ensure data persistence
         # also, retrieve formatting for variable and format the output
@@ -98,10 +117,20 @@ class SecondPanel(gridlib.Grid, wx.Panel):
 
 class MainFrame(wx.Frame):
     # ----------------------------------------------------------------------
-    def __init__(self, parent, db):
-        """Constructor"""
+    """
+
+    :param parent:
+    :param database:
+    """
+
+    def __init__(self, parent, database):
+        """Constructor
+        :type self: object
+        """
+        # noinspection PyCallByClass
         wx.Frame.__init__(self, None, title="test", size=(940, 600))
-        #grid = SecondPanel(self, db)
+
+        self.parent = parent
         exit = wx.Button(self, label="exit", pos=(800, 70))
         exit.Bind(wx.EVT_BUTTON, self.exit)
         exit.Bind(wx.EVT_CLOSE, self.exitwindow)
@@ -109,7 +138,7 @@ class MainFrame(wx.Frame):
         self.splitter = wx.SplitterWindow(self)
 
         self.panelOne = MainPanel(self.splitter)
-        self.panelTwo = SecondPanel(self.splitter, db)
+        self.panelTwo = SecondPanel(self.splitter, database)
 
         self.splitter.SplitHorizontally(self.panelOne, self.panelTwo)
         self.splitter.SetMinimumPaneSize(120)

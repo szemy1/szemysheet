@@ -162,7 +162,16 @@
       </option>
     </inspection_tool>
     <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
-      <scope name="Project Files" level="WEAK WARNING" enabled="true" />
+      <scope name="Project Files" level="WEAK WARNING" enabled="true">
+        <option name="ignoredBaseClasses">
+          <list>
+            <option value="unittest.TestCase" />
+            <option value="unittest.case.TestCase" />
+            <option value="szemysheet.SecondPanel" />
+            <option value="szemysheet.MainPanel" />
+          </list>
+        </option>
+      </scope>
     </inspection_tool>
     <inspection_tool class="PyPropertyAccessInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <scope name="Project Files" level="WARNING" enabled="true" />
@@ -239,7 +248,13 @@
       <scope name="Project Files" level="WARNING" enabled="true" />
     </inspection_tool>
     <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
-      <scope name="Project Files" level="WARNING" enabled="true" />
+      <scope name="Project Files" level="WARNING" enabled="true">
+        <option name="ignoredIdentifiers">
+          <list>
+            <option value="db" />
+          </list>
+        </option>
+      </scope>
     </inspection_tool>
     <inspection_tool class="PyUnusedLocalInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <scope name="Project Files" level="WEAK WARNING" enabled="true">
