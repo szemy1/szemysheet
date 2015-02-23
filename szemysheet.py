@@ -17,7 +17,6 @@ class MainPanel(wx.Panel):
         button = wx.Button(self, label=buttonlabel, pos=(20, 70))
         button.Bind(wx.EVT_BUTTON, self.SearchButton)
 
-
     def SearchButton(self, event):
         var = self.txtPlace.GetValue()
         if len(var) == 9 or len(var) == 11:

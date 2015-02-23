@@ -239,7 +239,18 @@
       <scope name="Project Files" level="WARNING" enabled="true" />
     </inspection_tool>
     <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
-      <scope name="Project Files" level="WARNING" enabled="true" />
+      <scope name="Project Files" level="WARNING" enabled="true">
+        <option name="ignoredIdentifiers">
+          <list>
+            <option value="Solver.Solver.*" />
+          </list>
+        </option>
+      </scope>
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="Solver.Solver.*" />
+        </list>
+      </option>
     </inspection_tool>
     <inspection_tool class="PyUnusedLocalInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <scope name="Project Files" level="WEAK WARNING" enabled="true">
