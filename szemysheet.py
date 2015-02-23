@@ -60,7 +60,7 @@ class SecondPanel(gridlib.Grid, wx.Panel):
                 labels = labels + (self.GetColLabelValue(i) + "  string,\n")
             labels = labels[0:-1]
             labels = labels[0:-1]  # very bad string code here!
-            labels = labels + ");"
+            labels += ");"
             self.cur.execute(labels)
             for i in range(self.GetNumberRows()):
                 RowLable = self.GetRowLabelValue(i)
@@ -70,7 +70,7 @@ class SecondPanel(gridlib.Grid, wx.Panel):
         self.Bind(gridlib.EVT_GRID_CELL_CHANGE, self.CellContentsChanged)
         self.Bind(wx.grid.EVT_GRID_CELL_LEFT_CLICK, self.SelectRowLeftClick)
         # self.Bind(wx.grid.EVT_GRID_SELECT_CELL, self.SelectCellSelectRow)
-        self.Bind(wx.EVT_NAVIGATION_KEY, self.SelectCellSelectRow)
+        self.Bind(wx.grid.wx.EVT_NAVIGATION_KEY, self.SelectCellSelectRow)
 
     def SelectRowLeftClick(self, event):
         self.SetSelectionMode(wx.grid.Grid.SelectRows)
